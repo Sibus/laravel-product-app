@@ -18,3 +18,7 @@ Route::get('/', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::resource('products', \App\Http\Controllers\ProductController::class)
+    ->except('show')
+    ->middleware(['auth']);
