@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Jobs\ProductCreatedNotification;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -25,6 +26,7 @@ class ProductController extends Controller
         $product = Product::create($attributes);
 
         if ($product) {
+            ProductCreatedNotification::dispatch($product);
             return redirect()
                 ->route('products.edit', $product)
                 ->with(['success' => "Product #{$product->id} successfully created"]);
